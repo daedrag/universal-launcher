@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Apps>
+  <App>
+    <StartupLocation></StartupLocation>
+    <EntryFilePath>C:\Program Files (x86)\Google\Chrome\Application\chrome.exe</EntryFilePath>
+    <Arguments></Arguments>
+    <AppType>EXE</AppType>
+    <Name>Chrome</Name>
+    <Version>1.0.1</Version>
+    <DisplayName>Chrome</DisplayName>
+    <Description></Description>
+    <ReleaseDate>2019-04-01</ReleaseDate>
+    <IconPath></IconPath>
+  </App>
+  <App>
+    <StartupLocation></StartupLocation>
+    <EntryFilePath>C:\Program Files\7-Zip\7zFM.exe</EntryFilePath>
+    <Arguments></Arguments>
+    <AppType>EXE</AppType>
+    <Name>7-Zip</Name>
+    <Version>10.2.1</Version>
+    <DisplayName>7-Zip</DisplayName>
+    <Description></Description>
+    <ReleaseDate>2018-10-20</ReleaseDate>
+    <IconPath></IconPath>
+  </App>
+</Apps>
