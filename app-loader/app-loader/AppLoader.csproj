@@ -62,6 +62,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Info\RemoteAppInfoCard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Info\AppInfoCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -75,6 +79,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="Converter\BooleanConverter.cs" />
+    <Compile Include="Converter\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Info\RemoteAppInfoCard.xaml.cs">
+      <DependentUpon>RemoteAppInfoCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Info\AppInfoCard.xaml.cs">
       <DependentUpon>AppInfoCard.xaml</DependentUpon>
     </Compile>

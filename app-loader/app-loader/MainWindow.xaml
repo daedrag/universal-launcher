@@ -5,11 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppLoader"
         xmlns:info="clr-namespace:AppLoader.Info"
+        xmlns:converter="clr-namespace:AppLoader.Converter"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Title="Applications" Height="800" Width="1200">
+    <Window.Resources>
+        <converter:BooleanToVisibilityConverter x:Key="TrueToVisible" True="Visible" False="Collapsed"/>
+        <converter:BooleanToVisibilityConverter x:Key="TrueToCollapsed" True="Collapsed" False="Visible"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -17,19 +22,74 @@
         </Grid.RowDefinitions>
 
         <Grid>
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="5">
-                <Button ToolTip="Show my apps" ToolTipService.InitialShowDelay="1" 
-                        Style="{DynamicResource MaterialDesignRaisedAccentButton}">
-                    <StackPanel Orientation="Horizontal">
-                        <md:PackIcon Kind="Apps" Width="20" Height="20"/>
-                        <TextBlock Margin="8 0 0 0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="MY APPS" />
-                    </StackPanel>
-                </Button>
-            </StackPanel>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="20 10">
+                    <RadioButton Name="MyAppsRadioBtn"
+                                 Style="{StaticResource MaterialDesignTabRadioButton}"
+                                 Margin="4" IsChecked="True"
+                                 Content="MY APPS"
+                                 Click="OnMyAppsTabClicked"/>
+                    <RadioButton Name="AllAppsRadioBtn"
+                                 Style="{StaticResource MaterialDesignTabRadioButton}"
+                                 Margin="4" IsChecked="False"
+                                 Content="ALL APPS"
+                                 Click="OnAllAppsClicked"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="20 10">
+                    <md:ColorZone Mode="Light"
+                                  HorizontalAlignment="Right"
+                                  VerticalAlignment="Center"
+                                  Padding="8 4 8 4"
+                                  CornerRadius="2"
+                                  Panel.ZIndex="1"
+                                  md:ShadowAssist.ShadowDepth="Depth1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button Style="{DynamicResource MaterialDesignToolButton}">
+                                <md:PackIcon Kind="Magnify" Opacity=".56" />
+                            </Button>
+                            <TextBox Grid.Column="1" Margin="8 0 0 0"
+                                 md:HintAssist.Hint="Search app"
+                                 md:TextFieldAssist.DecorationVisibility="Hidden"
+                                 BorderThickness="0"
+                                 MinWidth="200"
+                                 VerticalAlignment="Center" />
+                        </Grid>
+                    </md:ColorZone>
+                </StackPanel>
+            </Grid>
             <Border BorderBrush="{DynamicResource MaterialDesignDivider}" BorderThickness="0 0 0 1" />
         </Grid>
+        
         <Grid Grid.Row="1">
-            <ItemsControl ItemsSource="{Binding MyApps}" Margin="20">
+        
+            <ItemsControl ItemsSource="{Binding DisplayApps}" Margin="20"
+                          Visibility="{Binding IsLocalAppView, Converter={StaticResource TrueToCollapsed}}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <info:RemoteAppInfoCard DataContext="{Binding}" Margin="5"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+            <ItemsControl ItemsSource="{Binding DisplayApps}" Margin="20"
+                          Visibility="{Binding IsLocalAppView, Converter={StaticResource TrueToVisible}}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <info:AppInfoCard DataContext="{Binding}" Margin="5"/>
